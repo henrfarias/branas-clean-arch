@@ -5,6 +5,11 @@ export class CPFValidator {
   }
 
   public validate(): boolean {
+    const isValidLenght = this.lenghtValidator()
+
+    if (!isValidLenght) {
+      return false
+    }
     const checkNumberOne = this.calculateCheckNumber(10)
     const checkNumberTwo = this.calculateCheckNumber(11)
     return this.compareCheckNumbers([checkNumberOne, checkNumberTwo])
@@ -27,6 +32,11 @@ export class CPFValidator {
     const [originalOne, originalTwo] = originalCheckNumbers
     const [checkOne, checkTwo] = checkNumbers
     const isValid = checkOne === originalOne && checkTwo === originalTwo
-    return isValid     
+    return isValid
+  }
+
+  private lenghtValidator() {
+    const cpfLenght = 11
+    return this.cpf.length === cpfLenght
   }
 }
