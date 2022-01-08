@@ -35,4 +35,8 @@ describe('CPF Validator class', () => {
     const cpfValidator = new CPFValidator('03691630016')
     expect(cpfValidator.validate()).toBe(false)
   })
+  test('should return false if cpf has all numbers equals', () => {
+    const cpfValidator = new CPFValidator('11111111111')
+    expect(cpfValidator.validate()).toBe(false)
+  })
 })

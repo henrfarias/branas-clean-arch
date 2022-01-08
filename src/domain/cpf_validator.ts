@@ -6,10 +6,8 @@ export class CPFValidator {
 
   public validate(): boolean {
     const isValidLenght = this.lenghtValidator()
-
-    if (!isValidLenght) {
-      return false
-    }
+    if (!isValidLenght) return false
+    if (this.areAllDigitEquals()) return false
     const checkNumberOne = this.calculateCheckNumber(10)
     const checkNumberTwo = this.calculateCheckNumber(11)
     return this.compareCheckNumbers([checkNumberOne, checkNumberTwo])
@@ -38,5 +36,10 @@ export class CPFValidator {
   private lenghtValidator() {
     const cpfLenght = 11
     return this.cpf.length === cpfLenght
+  }
+
+  private areAllDigitEquals() {
+    const [firstDigit] = this.cpf
+    return this.cpf.every(digit => digit === firstDigit)
   }
 }
