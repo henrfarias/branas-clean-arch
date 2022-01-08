@@ -57,6 +57,20 @@ describe('Order class', () => {
       total: 37.4,
     } as IOrder)
   })
+
+  test('should write a description on an exists order', () => {
+    const order = Order.create(products)
+    order.writeDescription('bought in black friday')
+    expect(order.get).toStrictEqual({
+      products,
+      amount: 74.8,
+      quantity: 16,
+      description: 'bought in black friday',
+      discount: 0,
+      status: Status.PENDING,
+      total: 74.8,
+    } as IOrder)
+  })
   test('should not accept a descount coupon greater than 0.99 (99%)', () => {
     const order = Order.create(products)
     expect(() => order.applyDiscount(1.2)).toThrow('Invalid discount')
