@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "test:dev": "jest --watch"
+    "test:dev": "jest --watch --verbose --no-cache",
+    "cov": "jest --coverage"
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",
