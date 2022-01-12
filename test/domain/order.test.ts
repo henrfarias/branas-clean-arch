@@ -36,7 +36,9 @@ describe('Order class', () => {
     order.addProduct(prod1, 10)
     order.addProduct(prod2, 4)
     order.addProduct(prod3, 2)
-    order.addCoupon(Coupon.create('BLACKFRIDAY', 50))
+    order.addCoupon(
+      Coupon.create('BLACKFRIDAY', 50, new Date('2022-01-16T00:00:00.000Z'))
+    )
     expect(order.getTotal()).toBe(37.4)
   })
   test('should write a description on an exists order', () => {
@@ -46,5 +48,17 @@ describe('Order class', () => {
       items: [],
       description: 'bought in black friday',
     } as IOrder)
+  })
+
+  test('Should not apply a expired coupon', () => {
+    const order = Order.create()
+    order.addProduct(prod1, 10)
+    order.addProduct(prod2, 4)
+    order.addProduct(prod3, 2)
+    expect(() =>
+      order.addCoupon(
+        Coupon.create('BLACKFRIDAY', 50, new Date('2022-01-11T00:00:00.000Z'))
+      )
+    ).toThrow(new Error('Expired coupon'))
   })
 })

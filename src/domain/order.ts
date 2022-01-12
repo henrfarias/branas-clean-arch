@@ -31,10 +31,11 @@ export class Order {
       const item = orderItem.get()
       total += item.price * item.quantity
     }
-    if (this.coupon) total = total - (total * this.coupon.percentage)
+    if (this.coupon) total = total - total * this.coupon.percentage
     return total
   }
   public addCoupon(coupon: Coupon): void {
+    if (!this.isExpiredCoupon(coupon.expireIn)) throw new Error('Expired coupon')
     this.coupon = coupon
     return
   }
@@ -42,5 +43,10 @@ export class Order {
   public writeDescription(text: string) {
     this.order.description = text
     return
+  }
+
+  private isExpiredCoupon(date: Date): boolean {
+    const diffDate = Date.now() - date.getTime()
+    return diffDate < 0 ? true : false
   }
 }
