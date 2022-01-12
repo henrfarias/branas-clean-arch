@@ -1,17 +1,9 @@
+import { Coupon } from "../domain/coupon";
+import { OrderItem } from "../domain/orderItem";
 import { Product } from "../domain/product";
 
-export enum Status {
-  PENDING = 'pending',
-  SUCCESS = 'success',
-  FAILED = 'failed'
-} 
-
 export interface IOrder {
-  products: Product[]
-  amount: number
-  quantity: number
+  items: OrderItem[]
   description: string
-  discount?: number
-  status: Status
-  total: number
+  coupon?: Coupon
 }

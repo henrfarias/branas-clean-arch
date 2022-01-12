@@ -1,53 +1,46 @@
-import { IOrder, Status } from '../interfaces/iOrder'
+import { ICoupon } from '../interfaces/iCoupon'
+import { IOrder } from '../interfaces/iOrder'
+import { Coupon } from './coupon'
+import { OrderItem } from './orderItem'
 import { Product } from './product'
 
 export class Order {
+  coupon?: Coupon
   constructor(protected order: IOrder) {}
 
-  public get get() {
+  static create(): Order {
+    const order = new Order({ items: [], description: '' })
+    return order
+  }
+
+  public get() {
     const order = this.order
     return order
-  } 
+  }
 
-  public applyDiscount(rate: number) {
-    this.order.discount = rate
-    if (rate >= 1) {
-      throw new Error('Invalid discount')
+  public addProduct(item: Product, quantity: number): void {
+    const { items } = this.order
+    const { id, price } = item.get
+    items.push(new OrderItem({ id, price, quantity }))
+  }
+
+  public getTotal() {
+    const { items } = this.order
+    let total = 0
+    for (const orderItem of items) {
+      const item = orderItem.get()
+      total += item.price * item.quantity
     }
-    this.order.total = this.order.amount * (1 - rate)
+    if (this.coupon) total = total - (total * this.coupon.percentage)
+    return total
+  }
+  public addCoupon(coupon: Coupon): void {
+    this.coupon = coupon
     return
   }
 
   public writeDescription(text: string) {
     this.order.description = text
     return
-  }
-
-  static create(products: Product[]): Order {
-    if (!products.length) {
-      throw new Error('The order must have least one product')
-    }
-
-    const order: IOrder = {
-      products,
-      amount: 0,
-      quantity: 0,
-      description: '',
-      status: Status.PENDING,
-      discount: 0,
-      total: 0
-    }
-    for (let product of products) {
-      const { price, quantity } = product.get
-      order.amount += price * quantity
-      order.quantity += quantity
-    }
-    order.total = order.amount
-    return new Order(order)
-  }
-
-  public execute(): Status {
-    this.order.status = Status.SUCCESS
-    return Status.SUCCESS
   }
 }
