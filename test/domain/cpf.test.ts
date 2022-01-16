@@ -1,4 +1,4 @@
-import { Cpf } from '../../src/domain/cpf'
+import { Cpf } from '../../src/domain/entity/cpf'
 
 describe('CPF class', () => {
   test('should return a instance of cpf', () => {

@@ -1,5 +1,5 @@
-import { ICoupon } from '../interfaces/iCoupon'
-import { IOrder } from '../interfaces/iOrder'
+import { ICoupon } from '../entity/interfaces/iCoupon'
+import { IOrder } from '../entity/interfaces/iOrder'
 import { Coupon } from './coupon'
 import { Cpf } from './cpf'
 import { OrderItem } from './orderItem'

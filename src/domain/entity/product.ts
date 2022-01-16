@@ -1,4 +1,4 @@
-import { IProduct } from "../interfaces/iProduct"
+import { IProduct } from "../entity/interfaces/iProduct"
 
 export class Product {
   constructor(protected product: IProduct) {}

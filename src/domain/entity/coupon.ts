@@ -1,4 +1,4 @@
-import { ICoupon } from '../interfaces/iCoupon'
+import { ICoupon } from './interfaces/iCoupon'
 
 export class Coupon {
   readonly code: string

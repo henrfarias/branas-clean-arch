@@ -1,4 +1,4 @@
-import { IFreight, IInputFreight } from '../interfaces/iFreight'
+import { IFreight, IInputFreight } from '../entity/interfaces/iFreight'
 
 export class Freight {
   constructor(readonly freight: IFreight) {}

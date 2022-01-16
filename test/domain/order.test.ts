@@ -1,8 +1,8 @@
-import { Coupon } from '../../src/domain/coupon'
-import { Cpf } from '../../src/domain/cpf'
-import { Order } from '../../src/domain/order'
-import { Product } from '../../src/domain/product'
-import { IOrder } from '../../src/interfaces/iOrder'
+import { Coupon } from '../../src/domain/entity/coupon'
+import { Cpf } from '../../src/domain/entity/cpf'
+import { Order } from '../../src/domain/entity/order'
+import { Product } from '../../src/domain/entity/product'
+import { IOrder } from '../../src/domain/entity/interfaces/iOrder'
 
 describe('Order class', () => {
   const prod1 = Product.create({

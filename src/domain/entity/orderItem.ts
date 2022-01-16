@@ -1,4 +1,4 @@
-import { IOrderItem } from '../interfaces/iOrderItem'
+import { IOrderItem } from '../entity/interfaces/iOrderItem'
 
 export class OrderItem {
   constructor(readonly orderItem: IOrderItem) {}

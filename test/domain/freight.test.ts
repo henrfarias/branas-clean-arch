@@ -1,5 +1,5 @@
-import { Freight } from '../../src/domain/freight'
-import { IInputFreight } from '../../src/interfaces/iFreight'
+import { Freight } from '../../src/domain/entity/freight'
+import { IInputFreight } from '../../src/domain/entity/interfaces/iFreight'
 
 describe('Freight class', () => {
   const dimensions: IInputFreight[] = [
