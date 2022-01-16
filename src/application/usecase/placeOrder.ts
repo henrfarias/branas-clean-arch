@@ -1,10 +1,11 @@
 import { Cpf } from '../../domain/entity/cpf'
 import { Order } from '../../domain/entity/order'
 import { Product } from '../../domain/entity/product'
+import { IOrderRepository } from '../../domain/repository/orderRepository'
 import { IProductRepository } from '../../domain/repository/productRepository'
 
 export class PlaceOrder {
-  constructor(readonly productRepository: IProductRepository) {}
+  constructor(readonly productRepository: IProductRepository, readonly orderRepository: IOrderRepository) {}
 
   async execute(cpf: string, orderItems: any[]): Promise<any> {
     const order = Order.create(new Cpf(cpf))
@@ -12,6 +13,7 @@ export class PlaceOrder {
       const foundItem = await this.productRepository.findById(item.id)
       order.addProduct(foundItem, item.quantity)
     }
+    this.orderRepository.save(order)
     return {
       total: order.getTotal()
     }
