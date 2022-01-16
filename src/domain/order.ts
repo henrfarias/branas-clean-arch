@@ -1,15 +1,17 @@
 import { ICoupon } from '../interfaces/iCoupon'
 import { IOrder } from '../interfaces/iOrder'
 import { Coupon } from './coupon'
+import { Cpf } from './cpf'
 import { OrderItem } from './orderItem'
 import { Product } from './product'
 
 export class Order {
-  coupon?: Coupon
-  constructor(protected order: IOrder) {}
+  private coupon?: Coupon
 
-  static create(): Order {
-    const order = new Order({ items: [], description: '' })
+  constructor(readonly cpf: Cpf, protected order: IOrder) {}
+
+  static create(cpf: Cpf, dueDate: Date = new Date()): Order {
+    const order = new Order(cpf, { items: [], description: '', issueDate: dueDate })
     return order
   }
 
@@ -34,8 +36,9 @@ export class Order {
     if (this.coupon) total = total - total * this.coupon.percentage
     return total
   }
+
   public addCoupon(coupon: Coupon): void {
-    if (!this.isExpiredCoupon(coupon.expireIn)) throw new Error('Expired coupon')
+    if (coupon.isExpire(this.order.issueDate)) throw new Error('Expired coupon')
     this.coupon = coupon
     return
   }
@@ -43,10 +46,5 @@ export class Order {
   public writeDescription(text: string) {
     this.order.description = text
     return
-  }
-
-  private isExpiredCoupon(date: Date): boolean {
-    const diffDate = Date.now() - date.getTime()
-    return diffDate < 0 ? true : false
   }
 }

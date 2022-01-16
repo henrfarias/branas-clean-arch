@@ -6,4 +6,5 @@ export interface IOrder {
   items: OrderItem[]
   description: string
   coupon?: Coupon
+  issueDate: Date
 }
