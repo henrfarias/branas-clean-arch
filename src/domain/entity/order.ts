@@ -22,7 +22,7 @@ export class Order {
 
   public addProduct(item: Product, quantity: number): void {
     const { items } = this.order
-    const { id, price } = item.get
+    const { id, price } = item.getProduct()
     items.push(new OrderItem({ id, price, quantity }))
   }
 
