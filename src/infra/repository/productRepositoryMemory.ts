@@ -1,7 +1,7 @@
-import { Product } from '../domain/entity/product'
-import { ProductRepository } from '../domain/repository/productRepository'
+import { Product } from "../../domain/entity/product"
+import { IProductRepository } from "../../domain/repository/productRepository"
 
-export class ProductRepositoryMemory implements ProductRepository {
+export class ProductRepositoryMemory implements IProductRepository {
   products: Product[]
 
   constructor() {

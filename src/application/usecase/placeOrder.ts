@@ -1,10 +1,10 @@
 import { Cpf } from '../../domain/entity/cpf'
 import { Order } from '../../domain/entity/order'
 import { Product } from '../../domain/entity/product'
-import { ProductRepository } from '../../domain/repository/productRepository'
+import { IProductRepository } from '../../domain/repository/productRepository'
 
 export class PlaceOrder {
-  constructor(readonly productRepository: ProductRepository) {}
+  constructor(readonly productRepository: IProductRepository) {}
 
   async execute(cpf: string, orderItems: any[]): Promise<any> {
     const order = Order.create(new Cpf(cpf))

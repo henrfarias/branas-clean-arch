@@ -1,23 +1,27 @@
-import { IFreight, IInputFreight } from '../entity/interfaces/iFreight'
+import { Product } from "./product"
 
 export class Freight {
-  constructor(readonly freight: IFreight) {}
+  private price: number
 
-  static create(input: IInputFreight, distance: number): Freight {
-    const { height, length, width, weight } = input
-    const volume = (height * length * width) / Math.pow(100, 3)
-    const density = Math.floor(weight / volume)
-    const price = distance * volume * (density / 100)
-    return new Freight({ distance, volume, density, price })
+  constructor(readonly distance: number = 1000) {
+    this.price = 0
+  }
+
+  static create(distance?: number): Freight {
+    return new Freight(distance)
   }
 
   public getValue() {
-    const price = this.freight.price
+    const price = this.price
     return price
   }
 
+  public addFreight(product: Product, quantity: number) {
+    this.price += (product.getFreight(this.distance) * quantity)
+  }
+
   public apply() {
-    const price = this.freight.price
+    const price = this.price
     if (price < 10) return 10
     return price
   }

@@ -1,8 +1,8 @@
 import { Product } from '../../domain/entity/product'
-import { ProductRepository } from '../../domain/repository/productRepository'
+import { IProductRepository } from '../../domain/repository/productRepository'
 import { DatabaseConnection } from '../database/databaseConnection'
 
-export class ProductRepositoryDatabase implements ProductRepository {
+export class ProductRepositoryDatabase implements IProductRepository {
   constructor(readonly databaseConnection: DatabaseConnection) {}
 
   async findById(id: number): Promise<Product> {

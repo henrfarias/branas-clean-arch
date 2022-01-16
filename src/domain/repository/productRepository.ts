@@ -1,5 +1,5 @@
 import { Product } from '../entity/product'
 
-export interface ProductRepository {
+export interface IProductRepository {
   findById(id: number): Promise<Product>
 }
