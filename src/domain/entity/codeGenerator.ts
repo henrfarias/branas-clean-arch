@@ -4,7 +4,7 @@ export class CodeGenerator {
     this.characters = 'ABCDEFGHIJKLMNOPQRSTUVXZ0123456789'
   }
 
-  public generate(date: Date = new Date(), length: number = 8) {
+  public generate(date: Date, length: number = 8) {
     const year = date.getFullYear()
     const charactersLength = this.characters.length
     let serial = ''
