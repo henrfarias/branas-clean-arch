@@ -29,7 +29,7 @@ describe('Place order usecase', () => {
   })
 
   test('Should throw a not found error', async () => {
-    const placeOrder = new PlaceOrder(new ProductRepositoryMemory(), new OrderRepositoryMemory())
+    const placeOrder = new PlaceOrder(new ProductRepositoryDatabase(new DatabaseConnectionAdapter()), new OrderRepositoryMemory())
     try {
       const result = await placeOrder.execute('03889258093', [
         { id: 5, quantity: 1 },
