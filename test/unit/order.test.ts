@@ -7,12 +7,12 @@ test('Não deve criar um pedido com cpf inválido', function () {
 })
 
 test('Deve criar um pedido com cpf inválido', function () {
-  const order = new Order('038.892.580-93')
+  const order = new Order('800.493.940-61')
   expect(order).toBeDefined()
 })
 
 test('Deve criar um pedido com 3 itens', function () {
-  const order = new Order('038.892.580-93')
+  const order = new Order('800.493.940-61')
   order.addItem(new Item(1, 'Instrumentos Musicais', 'Guitarra', 1000), 1)
   order.addItem(new Item(2, 'Instrumentos Musicais', 'Amplificador', 5000), 1)
   order.addItem(new Item(3, 'Instrumentos Musicais', 'Cabo', 30), 3)
@@ -21,7 +21,7 @@ test('Deve criar um pedido com 3 itens', function () {
 })
 
 test('Deve criar um pedido com 3 itens com cupom de desconto', function () {
-  const order = new Order('038.892.580-93')
+  const order = new Order('800.493.940-61')
   order.addItem(new Item(1, 'Instrumentos Musicais', 'Guitarra', 1000), 1)
   order.addItem(new Item(2, 'Instrumentos Musicais', 'Amplificador', 5000), 1)
   order.addItem(new Item(3, 'Instrumentos Musicais', 'Cabo', 30), 3)
@@ -31,7 +31,7 @@ test('Deve criar um pedido com 3 itens com cupom de desconto', function () {
 })
 
 test('Deve criar um pedido com 3 itens com cupom de desconto expirado', function () {
-  const order = new Order('038.892.580-93', new Date('2021-03-02'))
+  const order = new Order('800.493.940-61', new Date('2021-03-02'))
   order.addItem(new Item(1, 'Instrumentos Musicais', 'Guitarra', 1000), 1)
   order.addItem(new Item(2, 'Instrumentos Musicais', 'Amplificador', 5000), 1)
   order.addItem(new Item(3, 'Instrumentos Musicais', 'Cabo', 30), 3)
@@ -41,10 +41,16 @@ test('Deve criar um pedido com 3 itens com cupom de desconto expirado', function
 })
 
 test('Deve criar um pedido com 3 itens', function () {
-  const order = new Order('038.892.580-93')
+  const order = new Order('800.493.940-61')
   order.addItem(new Item(1, 'Instrumentos Musicais', 'Guitarra', 1000, 100, 30 , 10, 3), 1)
   order.addItem(new Item(2, 'Instrumentos Musicais', 'Amplificador', 5000, 100, 50, 50, 20), 1)
   order.addItem(new Item(3, 'Instrumentos Musicais', 'Cabo', 30, 10, 10, 10, 0.9), 3)
   const freight = order.getFreight()
   expect(freight).toBe(260)
+})
+
+test('Deve criar um pedido com código gerado', function () {
+  const order = new Order('800.493.940-61', new Date('2021-03-01'), 2)
+  const code = order.code
+  expect(code.value).toBe('202100000002')
 })

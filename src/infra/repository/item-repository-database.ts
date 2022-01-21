@@ -7,9 +7,9 @@ export default class ItemRepositoryDatabase implements ItemRepository {
 
   async findById(idItem: number): Promise<Item> {
     const [item] = await this.databaseConnection.query(
-      'select * from public.items where id = $1',
+      'select * from template.items where id = $1',
       [idItem]
     )
-    return new Item(item.idItem, item.category, item.description, item.price)
+    return new Item(item.id, item.category, item.description, item.price, item.width, item.height, item.length, item.weight)
   }
 }

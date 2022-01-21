@@ -3,7 +3,6 @@ export default class Cpf {
 
   constructor(value: string) {
     this.value = this.format(value)
-
     if (!this.validate()) throw new Error('Invalid cpf')
   }
 
