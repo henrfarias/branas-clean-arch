@@ -9,18 +9,18 @@ export class OrderRepositoryDatabase implements IOrderRepository {
     const { code, coupon, description, freight, issueDate, items } = order.get()
     const [orderData] = await this.databaseConnection.query(
       `insert into project.orders (
-        coupon, code, cpf, issue_date, freight, description
+        code, cpf, issue_date, freight, description, coupon 
       )
       values (
         $1, $2, $3, $4, $5, $6
       ) returning *`,
       [
-        coupon?.code,
         code,
         order.cpf.cpf,
         issueDate,
         freight.getValue(),
         description,
+        order.getCoupon(),
       ]
     )
     for (const item of items) {

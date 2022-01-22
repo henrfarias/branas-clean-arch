@@ -60,4 +60,9 @@ export class Order {
     this.order.description = text
     return
   }
+
+  public getCoupon() {
+    const code = this.coupon?.code
+    return code
+  }
 }
