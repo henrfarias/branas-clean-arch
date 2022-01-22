@@ -1,8 +1,8 @@
-import { DatabaseConnection } from "./databaseConnection";
+import { IDatabaseConnection } from "./databaseConnection";
 import pgp from 'pg-promise'
 import { Product } from "../../domain/entity/product";
 
-export class DatabaseConnectionAdapter implements DatabaseConnection {
+export class DatabaseConnectionAdapter implements IDatabaseConnection {
   pgp: any
 
   constructor() {

@@ -12,7 +12,7 @@ export class Coupon {
   }
 
   static create(code: string, percentage: number, expireIn?: Date) {
-    const factor = percentage / 100
+    const factor = +percentage / 100
     if (factor >= 1) throw new Error('Invalid coupon')
     return new Coupon({ code, percentage: factor, expireIn })
   }
@@ -20,5 +20,10 @@ export class Coupon {
   public isExpire(today: Date = new Date()) {
     if (!this.expireIn) return false
     return today.getTime() > this.expireIn.getTime()
+  }
+
+  public getPercentage() {
+    const percentage = this.percentage * 100
+    return percentage
   }
 }

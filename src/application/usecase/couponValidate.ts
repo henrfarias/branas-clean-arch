@@ -7,7 +7,7 @@ export class CouponValidate {
     const coupon = await this.couponRepository.findByCode(input)
     return {
       code: coupon.code,
-      percentage: coupon.percentage
+      percentage: coupon.getPercentage()
     }
   }
 }
