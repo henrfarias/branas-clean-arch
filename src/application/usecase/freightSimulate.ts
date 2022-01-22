@@ -1,6 +1,5 @@
-import { Product } from '../../domain/entity/product'
 import { IProductRepository } from '../../domain/repository/productRepository'
-import { IOrderItemInput } from '../dto/orderItemInput'
+import { ISimulateFreightInput } from '../dto/simulateFreightInput'
 
 export class FreightSimulate {
   freight: number
@@ -9,7 +8,7 @@ export class FreightSimulate {
     this.freight = 0
   }
 
-  public async simulate(input: IOrderItemInput[]) {
+  public async simulate(input: ISimulateFreightInput[]) {
     for (const inputItem of input) {
       const foundItem = await this.productRepository.findById(inputItem.id)
       this.freight += foundItem.getFreight(1000)
