@@ -11,11 +11,11 @@ export class Order {
   private coupon?: Coupon
   private items: OrderItem[]
   private freight: Freight
-  private code: OrderCode
+  private code: string
 
   constructor(readonly cpf: Cpf, protected order: IOrder) {
     this.items = []
-    this.code = new OrderCode(order.issueDate)
+    this.code = new OrderCode(order.issueDate).getValue()
     this.freight = new Freight()
   }
 
@@ -25,7 +25,12 @@ export class Order {
   }
 
   public get() {
-    const order = { ...this.order, items: this.items }
+    const order = {
+      ...this.order,
+      items: this.items,
+      code: this.code,
+      freight: this.freight,
+    }
     return order
   }
 
@@ -41,7 +46,7 @@ export class Order {
       const item = orderItem.get()
       total += item.price * item.quantity
     }
-    if (this.coupon) total = total - total * this.coupon.percentage
+    if (this.coupon) total = +(total - total * this.coupon.percentage).toFixed(2)
     return total
   }
 

@@ -1,7 +1,7 @@
 import { IOrderItem } from '../entity/interfaces/iOrderItem'
 
 export class OrderItem {
-  constructor(readonly orderItem: IOrderItem) {}
+  constructor(private orderItem: IOrderItem) {}
 
   public get() {
     const orderItem = this.orderItem

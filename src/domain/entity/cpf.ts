@@ -1,9 +1,10 @@
 export class Cpf {
-  cpf: string[]
+  cpf: string
+
   constructor(cpf: string) {
     const value = this.format(cpf)
     if (!this.validate(value)) throw new Error('Invalid cpf')
-    this.cpf = value
+    this.cpf = value.join('')
   }
 
   static create(value: string) {

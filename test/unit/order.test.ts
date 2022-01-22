@@ -2,7 +2,6 @@ import { Coupon } from '../../src/domain/entity/coupon'
 import { Cpf } from '../../src/domain/entity/cpf'
 import { Order } from '../../src/domain/entity/order'
 import { Product } from '../../src/domain/entity/product'
-import { IOrder } from '../../src/domain/entity/interfaces/iOrder'
 
 describe('Order class', () => {
   const prod1 = Product.create({
@@ -43,11 +42,7 @@ describe('Order class', () => {
   test('should write a description on an exists order', () => {
     const order = Order.create(new Cpf('03889258093'), new Date('2022-01-10'))
     order.writeDescription('bought in black friday')
-    expect(order.get()).toStrictEqual({
-      items: [],
-      description: 'bought in black friday',
-      issueDate: new Date('2022-01-10'),
-    } as IOrder)
+    expect(order.get().description).toStrictEqual('bought in black friday')
   })
 
   test('Should not apply a expired coupon', () => {
@@ -56,9 +51,7 @@ describe('Order class', () => {
     order.addProduct(prod2, 4)
     order.addProduct(prod3, 2)
     expect(() =>
-      order.addCoupon(
-        Coupon.create('BLACKFRIDAY', 50, new Date('2022-01-11'))
-      )
+      order.addCoupon(Coupon.create('BLACKFRIDAY', 50, new Date('2022-01-11')))
     ).toThrow(new Error('Expired coupon'))
   })
 })
