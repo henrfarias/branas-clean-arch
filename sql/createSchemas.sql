@@ -53,7 +53,7 @@ CREATE TABLE project.orders (
   cpf text,
   issue_date timestamp,
   freight numeric,
-  sequence integer,
+  description text,
   primary key (id)
 );
 
