@@ -1,5 +1,6 @@
 import { ICoupon } from '../entity/interfaces/iCoupon'
 import { IOrder } from '../entity/interfaces/iOrder'
+import { OrderCode } from './orderCode'
 import { Coupon } from './coupon'
 import { Cpf } from './cpf'
 import { Freight } from './freight'
@@ -10,14 +11,16 @@ export class Order {
   private coupon?: Coupon
   private items: OrderItem[]
   private freight: Freight
+  private code: OrderCode
 
   constructor(readonly cpf: Cpf, protected order: IOrder) {
     this.items = []
+    this.code = new OrderCode(order.issueDate)
     this.freight = new Freight()
   }
 
-  static create(cpf: Cpf, dueDate: Date = new Date()): Order {
-    const order = new Order(cpf, { description: '', issueDate: dueDate })
+  static create(cpf: Cpf, issueDate: Date = new Date()): Order {
+    const order = new Order(cpf, { description: '', issueDate })
     return order
   }
 

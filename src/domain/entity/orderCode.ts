@@ -1,10 +1,13 @@
-export class CodeGenerator {
+export class OrderCode {
   characters: string
-  constructor() {
+  value: string
+
+  constructor(orderDate: Date, length: number = 8) {
     this.characters = 'ABCDEFGHIJKLMNOPQRSTUVXZ0123456789'
+    this.value = this.generate(orderDate, length)
   }
 
-  public generate(date: Date, length: number = 8) {
+  private generate(date: Date, length: number) {
     const year = date.getFullYear()
     const charactersLength = this.characters.length
     let serial = ''
@@ -14,5 +17,10 @@ export class CodeGenerator {
       )
     }
     return `${year}${serial}`
+  }
+
+  public getValue() {
+    const code = this.value
+    return code
   }
 }
