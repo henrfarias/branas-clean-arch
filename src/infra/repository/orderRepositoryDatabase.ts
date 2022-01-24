@@ -1,13 +1,35 @@
+import { Cpf } from '../../domain/entity/cpf'
 import { Order } from '../../domain/entity/order'
-import { IOrderRepository } from '../../domain/repository/orderRepository'
+import { Product } from '../../domain/entity/product'
+import {
+  IFindOrderByCodeOutput,
+  IOrderRepository,
+} from '../../domain/repository/orderRepository'
 import { IDatabaseConnection } from '../database/databaseConnection'
+
+interface IOrderData {
+  id: number
+  coupon?: string
+  code: string
+  cpf: string
+  issue_date: Date
+  freight: number
+  description: string
+}
+
+interface IOrderItemData {
+  id_order: number
+  id_item: number
+  price: number
+  quantity: number
+}
 
 export class OrderRepositoryDatabase implements IOrderRepository {
   constructor(readonly databaseConnection: IDatabaseConnection) {}
 
   async save(order: Order): Promise<void> {
-    const { code, coupon, description, freight, issueDate, items } = order.get()
-    const [orderData] = await this.databaseConnection.query(
+    const { code, description, freight, issueDate, items } = order.get()
+    const [orderData]: IOrderData[] = await this.databaseConnection.query(
       `insert into project.orders (
         code, cpf, issue_date, freight, description, coupon 
       )
@@ -24,13 +46,33 @@ export class OrderRepositoryDatabase implements IOrderRepository {
       ]
     )
     for (const item of items) {
-      const {id: idItem, price, quantity} = item.get()
-      await this.databaseConnection.query(`insert into project.order_items (
+      const { id: idItem, price, quantity } = item.get()
+      await this.databaseConnection.query(
+        `insert into project.order_items (
         id_order, id_item, price, quantity
       )
       values (
         $1, $2, $3, $4
-      );`, [orderData.id, idItem, price, quantity])
+      );`,
+        [orderData.id, idItem, price, quantity]
+      )
     }
+  }
+
+  async findByCode(code: string): Promise<IFindOrderByCodeOutput> {
+    const [orderData]: IOrderData[] = await this.databaseConnection.query(
+      'select * from project.orders where code=$1',
+      [code]
+    )
+    const order = new Order(new Cpf(orderData.cpf), {
+      description: orderData.description,
+      issueDate: orderData.issue_date,
+    })
+    const couponCode = orderData.coupon ? orderData.coupon : ''
+    const orderItems: IOrderItemData[] = await this.databaseConnection.query(
+      'select * from project.order_items where order_id=$1',
+      [orderData.id]
+    )
+    return { order, couponCode }
   }
 }
