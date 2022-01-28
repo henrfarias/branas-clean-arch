@@ -11,9 +11,9 @@ export class Order {
   private coupon?: Coupon
   private items: OrderItem[]
   private freight: Freight
-  private code: string
+  readonly code: string
 
-  constructor(readonly cpf: Cpf, protected order: IOrder) {
+  constructor(readonly cpf: Cpf, readonly order: IOrder) {
     this.items = []
     this.code = new OrderCode(order.issueDate).getValue()
     this.freight = new Freight()

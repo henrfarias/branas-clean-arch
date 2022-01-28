@@ -1,6 +1,6 @@
+import { OrderViewDTO } from '../../application/dto/orderView'
 import { Cpf } from '../../domain/entity/cpf'
 import { Order } from '../../domain/entity/order'
-import { Product } from '../../domain/entity/product'
 import {
   IFindOrderByCodeOutput,
   IOrderRepository,
@@ -26,6 +26,12 @@ interface IOrderItemData {
 
 export class OrderRepositoryDatabase implements IOrderRepository {
   constructor(readonly databaseConnection: IDatabaseConnection) {}
+  async saveView(data: OrderViewDTO): Promise<void> {
+    await this.databaseConnection.query(
+      'insert into project.order_view (code, data) values ($1, $2)',
+      [data.code, data]
+    )
+  }
 
   async save(order: Order): Promise<void> {
     const { code, description, freight, issueDate, items } = order.get()

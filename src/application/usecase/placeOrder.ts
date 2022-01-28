@@ -4,6 +4,7 @@ import { ICouponRepository } from '../../domain/repository/couponRepository'
 import { IOrderRepository } from '../../domain/repository/orderRepository'
 import { IProductRepository } from '../../domain/repository/productRepository'
 import { IOrderItemInput } from '../dto/orderItemInput'
+import { OrderViewDTO } from '../dto/orderView'
 
 export class PlaceOrder {
   constructor(
@@ -12,7 +13,11 @@ export class PlaceOrder {
     readonly couponRepository: ICouponRepository
   ) {}
 
-  async execute(cpf: string, orderItems: IOrderItemInput[], couponCode?: string): Promise<any> {
+  async execute(
+    cpf: string,
+    orderItems: IOrderItemInput[],
+    couponCode?: string
+  ): Promise<any> {
     const order = Order.create(new Cpf(cpf))
     for (const item of orderItems) {
       const foundItem = await this.productRepository.findById(item.id)
@@ -22,8 +27,11 @@ export class PlaceOrder {
       const coupon = await this.couponRepository.findByCode(couponCode)
       order.addCoupon(coupon)
     }
-    this.orderRepository.save(order)
+    await this.orderRepository.save(order)
+    const dataView = new OrderViewDTO(order)
+    await this.orderRepository.saveView(dataView)
     return {
+      code: order.code,
       total: order.getTotal(),
     }
   }
