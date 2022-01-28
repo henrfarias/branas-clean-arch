@@ -1,21 +1,25 @@
 import PlaceOrderInput from '../../src/application/dto/place-order-input'
+import GetOrders from '../../src/application/query/get-orders'
 import PlaceOrder from '../../src/application/usecases/place-order'
+import OrderDAODatabase from '../../src/infra/dao/order-dao-database'
 import DatabaseConnectionAdapter from '../../src/infra/database/database-connection-adapter'
 import CouponRepositoryDatabase from '../../src/infra/repository/coupon-repository-database'
 import ItemRepositoryDatabase from '../../src/infra/repository/item-repository-database'
 import OrderRepositoryDatabase from '../../src/infra/repository/order-repository-database'
 
 let placeOrder: PlaceOrder
-
+let getOrders: GetOrders
 beforeEach(function () {
-  const connectionAdapter = new DatabaseConnectionAdapter()
-  const itemRepository = new ItemRepositoryDatabase(connectionAdapter)
-  const orderRepository = new OrderRepositoryDatabase(connectionAdapter)
-  const couponRepository = new CouponRepositoryDatabase(connectionAdapter)
+  const databaseConnection = new DatabaseConnectionAdapter()
+  const itemRepository = new ItemRepositoryDatabase(databaseConnection)
+  const orderRepository = new OrderRepositoryDatabase(databaseConnection)
+  const couponRepository = new CouponRepositoryDatabase(databaseConnection)
   placeOrder = new PlaceOrder(itemRepository, orderRepository, couponRepository)
+  const orderDAO = new OrderDAODatabase(databaseConnection)
+  getOrders = new GetOrders(orderDAO)
 })
 
-test('Deve fazer um pedido', async function () {
+test('Deve obter um pedido pelo codigo', async function () {
   const input = new PlaceOrderInput(
     '847.903.332-05',
     [
@@ -35,7 +39,7 @@ test('Deve fazer um pedido', async function () {
     new Date('2021-03-01'),
     'VALE20'
   )
-  const output = await placeOrder.execute(input)
-
-  expect(output.total).toBe(4872)
+  await placeOrder.execute(input)
+  const getOrdersOutput = await getOrders.execute()
+  console.log(getOrdersOutput)
 })
