@@ -3,18 +3,13 @@ import GetOrders from '../../src/application/query/get-orders'
 import PlaceOrder from '../../src/application/usecases/place-order'
 import OrderDAODatabase from '../../src/infra/dao/order-dao-database'
 import DatabaseConnectionAdapter from '../../src/infra/database/database-connection-adapter'
-import CouponRepositoryDatabase from '../../src/infra/repository/coupon-repository-database'
-import ItemRepositoryDatabase from '../../src/infra/repository/item-repository-database'
-import OrderRepositoryDatabase from '../../src/infra/repository/order-repository-database'
+import DatabaseRepositoryFactory from '../../src/infra/factory/DatabaseRepositoryFactory'
 
 let placeOrder: PlaceOrder
 let getOrders: GetOrders
 beforeEach(function () {
   const databaseConnection = new DatabaseConnectionAdapter()
-  const itemRepository = new ItemRepositoryDatabase(databaseConnection)
-  const orderRepository = new OrderRepositoryDatabase(databaseConnection)
-  const couponRepository = new CouponRepositoryDatabase(databaseConnection)
-  placeOrder = new PlaceOrder(itemRepository, orderRepository, couponRepository)
+  placeOrder = new PlaceOrder(new DatabaseRepositoryFactory(databaseConnection))
   const orderDAO = new OrderDAODatabase(databaseConnection)
   getOrders = new GetOrders(orderDAO)
 })
@@ -41,5 +36,5 @@ test('Deve obter um pedido pelo codigo', async function () {
   )
   await placeOrder.execute(input)
   const getOrdersOutput = await getOrders.execute()
-  console.log(getOrdersOutput)
+  expect(getOrdersOutput).toBeDefined()
 })

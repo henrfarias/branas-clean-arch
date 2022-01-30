@@ -1,18 +1,13 @@
 import PlaceOrderInput from '../../src/application/dto/place-order-input'
 import PlaceOrder from '../../src/application/usecases/place-order'
 import DatabaseConnectionAdapter from '../../src/infra/database/database-connection-adapter'
-import CouponRepositoryDatabase from '../../src/infra/repository/coupon-repository-database'
-import ItemRepositoryDatabase from '../../src/infra/repository/item-repository-database'
-import OrderRepositoryDatabase from '../../src/infra/repository/order-repository-database'
+import DatabaseRepositoryFactory from '../../src/infra/factory/DatabaseRepositoryFactory'
 
 let placeOrder: PlaceOrder
 
 beforeEach(function () {
   const connectionAdapter = new DatabaseConnectionAdapter()
-  const itemRepository = new ItemRepositoryDatabase(connectionAdapter)
-  const orderRepository = new OrderRepositoryDatabase(connectionAdapter)
-  const couponRepository = new CouponRepositoryDatabase(connectionAdapter)
-  placeOrder = new PlaceOrder(itemRepository, orderRepository, couponRepository)
+  placeOrder = new PlaceOrder(new DatabaseRepositoryFactory(connectionAdapter))
 })
 
 test('Deve fazer um pedido', async function () {
