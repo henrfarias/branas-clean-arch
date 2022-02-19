@@ -89,3 +89,9 @@ CREATE TABLE project.order_items (
 	quantity integer,
 	primary key (id_order, id_item)
 );
+
+CREATE TABLE project.order_view (
+  code char(15),
+  data jsonb,
+  primary key (code)
+);
