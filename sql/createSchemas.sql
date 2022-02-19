@@ -44,6 +44,15 @@ CREATE TABLE template.order_items (
 	primary key (id_order, id_item)
 );
 
+ALTER TABLE template.orders ADD COLUMN total float
+
+CREATE TABLE template.order_view (
+  code char(15),
+  data jsonb,
+  primary key (code)
+);
+
+
 CREATE SCHEMA project;
 
 CREATE TABLE project.orders (
@@ -88,4 +97,10 @@ CREATE TABLE project.order_items (
 	price numeric,
 	quantity integer,
 	primary key (id_order, id_item)
+);
+
+CREATE TABLE template.order_view (
+  code char(15),
+  data jsonb,
+  primary key (code)
 );
