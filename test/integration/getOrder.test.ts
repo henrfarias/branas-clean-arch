@@ -32,6 +32,6 @@ describe('Get order use case', () => {
     const order = await placeOrder.execute('798.353.070-67', input)
     const getOrder = new GetOrder(databaseConnection)
     const orderData = await getOrder.execute(order.code)
-    console.log(orderData)
+    expect(orderData).toHaveProperty('cpf')
   })
 })

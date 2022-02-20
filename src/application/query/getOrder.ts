@@ -9,6 +9,6 @@ export class GetOrder {
       'select data from project.order_view where code = $1',
       [code]
     )
-    return orderData
+    return orderData.data
   }
 }
