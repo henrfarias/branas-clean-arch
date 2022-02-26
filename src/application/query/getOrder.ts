@@ -6,7 +6,7 @@ export class GetOrder {
 
   async execute(code: string): Promise<IGetOrderOutput> {
     const [orderData] = await this.databaseConnection.query(
-      'select data from project.order_view where code = $1',
+      'select data from project.order_view where code = $1 LIMIT 1;',
       [code]
     )
     return orderData.data

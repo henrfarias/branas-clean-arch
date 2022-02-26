@@ -11,5 +11,4 @@ export class DatabaseConnectionAdapter implements IDatabaseConnection {
   async query(statement: string, props: any): Promise<any> {
     return await this.pgp.query(statement, props)
   }
-
 }
