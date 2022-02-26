@@ -1,6 +1,6 @@
-import Coupon from "../../src/domain/entities/coupon"
-import Item from "../../src/domain/entities/item"
-import Order from "../../src/domain/entities/order"
+import Coupon from "../../src/checkout/domain/entities/coupon"
+import Item from "../../src/checkout/domain/entities/item"
+import Order from "../../src/checkout/domain/entities/order"
 
 test('Não deve criar um pedido com cpf inválido', function () {
   expect(() => new Order('111.111.111-11')).toThrow(new Error('Invalid cpf'))

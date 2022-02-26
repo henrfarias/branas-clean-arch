@@ -1,9 +1,9 @@
-import PlaceOrderInput from '../../src/application/dto/place-order-input'
-import GetOrders from '../../src/application/query/get-orders'
-import PlaceOrder from '../../src/application/usecases/place-order'
-import OrderDAODatabase from '../../src/infra/dao/order-dao-database'
-import DatabaseConnectionAdapter from '../../src/infra/database/database-connection-adapter'
-import DatabaseRepositoryFactory from '../../src/infra/factory/DatabaseRepositoryFactory'
+import PlaceOrderInput from '../../src/checkout/application/dto/place-order-input'
+import GetOrders from '../../src/checkout/application/query/get-orders'
+import PlaceOrder from '../../src/checkout/application/usecases/place-order'
+import OrderDAODatabase from '../../src/checkout/infra/dao/order-dao-database'
+import DatabaseConnectionAdapter from '../../src/checkout/infra/database/database-connection-adapter'
+import DatabaseRepositoryFactory from '../../src/checkout/infra/factory/DatabaseRepositoryFactory'
 
 let placeOrder: PlaceOrder
 let getOrders: GetOrders

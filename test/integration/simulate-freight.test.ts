@@ -1,7 +1,7 @@
-import SimulateFreightInput from '../../src/application/dto/simulate-freight-input'
-import SimulateFreight from '../../src/application/usecases/simulate-freight'
-import DatabaseConnectionAdapter from '../../src/infra/database/database-connection-adapter'
-import ItemRepositoryDatabase from '../../src/infra/repository/item-repository-database'
+import SimulateFreightInput from '../../src/checkout/application/dto/simulate-freight-input'
+import SimulateFreight from '../../src/checkout/application/usecases/simulate-freight'
+import DatabaseConnectionAdapter from '../../src/checkout/infra/database/database-connection-adapter'
+import ItemRepositoryDatabase from '../../src/checkout/infra/repository/item-repository-database'
 
 test('Deve simular o frete dos produtos', async function () {
   const databaseConnection = new DatabaseConnectionAdapter()
