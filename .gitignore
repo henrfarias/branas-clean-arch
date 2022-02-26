@@ -2,3 +2,5 @@ node_modules
 dist
 coverage
 .vscode
+docker-compose.yml
+db-data
